@@ -39,12 +39,14 @@ SUPER RECORD is an Electron + React + TypeScript screen and game recorder for Wi
 
 ## Download
 
-Prebuilt Windows installers are published on the Releases page:
+Prebuilt Windows releases are available on the [GitHub Releases](https://github.com/DRwander84/Super-Record-Demo/releases) page.
 
-- `Super-Record-Setup-<version>.exe` - installer
-- `Super-Record-Portable-<version>.exe` - runs without installing
+Each release includes:
 
-The builds are not code-signed, so Windows SmartScreen may show a warning. Choose **More info**, then **Run anyway**.
+- `Super-Record-Setup-<version>.exe` - Windows installer.
+- `Super-Record-Portable-<version>.exe` - Portable version that runs without installation.
+
+The builds are not code-signed, so Windows SmartScreen may show a warning.
 
 ## Development
 
@@ -83,4 +85,8 @@ GPU values for NVIDIA cards, RAM, CPU usage and the CPU / GPU names work out of 
 
 ## License
 
-See the `LICENSE` file.
+SUPER RECORD is licensed under the Apache License, Version 2.0.
+
+You may use, modify, and redistribute this software under the terms of the license.
+
+See the [LICENSE](LICENSE) file for the full license text and the [NOTICE](NOTICE) file for attribution information.
