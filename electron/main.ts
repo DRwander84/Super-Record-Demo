@@ -527,10 +527,10 @@ ipcMain.handle(
     const currentSettings = await getAppSettings()
 
     const options: OpenDialogOptions = {
-      title: 'Choose Recording Folder',
+      title: currentSettings.language === 'fa' ? 'انتخاب پوشه ضبط' : 'Choose Recording Folder',
       defaultPath: currentSettings.outputDirectory,
       properties: ['openDirectory', 'createDirectory'],
-      buttonLabel: 'Select Folder',
+      buttonLabel: currentSettings.language === 'fa' ? 'انتخاب پوشه' : 'Select Folder',
     }
 
     const result = parentWindow
@@ -843,7 +843,10 @@ ipcMain.handle('area:select', async (_event, sourceId: unknown) => {
   }
 
   try {
-    const rect = await selectCaptureArea(display)
+    const rect = await selectCaptureArea(
+      display,
+      (await getAppSettings()).language === 'fa' ? 'fa' : 'en',
+    )
     if (!rect) return null
 
     const pixels = process.platform === 'win32'

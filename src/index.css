@@ -6,7 +6,7 @@
 ================================ */
 
 :root {
-  font-family: "Segoe UI", Inter, Arial, sans-serif;
+  font-family: "SR Font", "Segoe UI", Arial, sans-serif;
   color: #f5f5f7;
   background: transparent;
   font-synthesis: none;
@@ -638,7 +638,7 @@ button:focus-visible {
     inset 0 -1px 0 rgba(0, 0, 0, 0.3),
     0 18px 48px rgba(0, 0, 0, 0.45),
     0 0 32px rgba(124, 58, 237, 0.16);
-  font-family: "Segoe UI", Inter, Arial, sans-serif;
+  font-family: "SR Font", "Segoe UI", Arial, sans-serif;
 }
 
 .glass-menu-list {
@@ -697,28 +697,31 @@ button:disabled {
 }
 
 
-/* SUPER RECORD - LABEL FONT
-   Poppins (SIL Open Font License), bundled locally so it also works offline. */
-
+/* SUPER RECORD - APP FONTS (bundled locally, works offline)
+   Open Sans for English / Latin text, Vazirmatn for Persian / Arabic script.
+   Both are one family so every text picks the right font automatically. */
 @font-face {
-  font-family: "Poppins";
+  font-family: "SR Font";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 100 900;
   font-display: swap;
-  src: url("./assets/fonts/Poppins-Medium.woff") format("woff");
+  src: url("./assets/fonts/OpenSans-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: "SR Font";
   font-style: normal;
-  font-weight: 700;
+  font-weight: 100 900;
   font-display: swap;
-  src: url("./assets/fonts/Poppins-Bold.woff") format("woff");
+  src: url("./assets/fonts/Vazirmatn-Bold.ttf") format("truetype");
+  unicode-range:
+    U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF,
+    U+200C-200D, U+00AB, U+00BB;
 }
 
 /* Setting names (rows). */
 .label-font {
-  font-family: "Poppins", "Segoe UI", Inter, Arial, sans-serif;
+  font-family: "SR Font", "Segoe UI", Arial, sans-serif;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1.25rem;
@@ -726,8 +729,95 @@ button:disabled {
 
 /* Panel / section headings. */
 .heading-font {
-  font-family: "Poppins", "Segoe UI", Inter, Arial, sans-serif;
+  font-family: "SR Font", "Segoe UI", Arial, sans-serif;
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1.25rem;
+}
+
+/* ==============================
+   LANGUAGE SWITCH (EN / FA)
+================================ */
+
+.language-switch {
+  display: flex;
+  width: max-content;
+  margin-left: auto;
+  padding: 3px;
+  gap: 3px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.language-option {
+  min-width: 64px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #a1a1aa;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.language-option:hover:not(.is-active) {
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+}
+
+.language-option.is-active {
+  background: #ef4444;
+  color: #fff;
+}
+
+/* ==============================
+   PERSIAN (RTL) LAYOUT
+   Text is right-aligned; dropdowns, buttons and other controls move to the
+   left. The sidebar and the title bar keep their normal position.
+================================ */
+
+html.lang-fa .page-content {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Persian letters join each other: letter-spacing would break them apart. */
+html.lang-fa .page-content *,
+html.lang-fa .glass-menu * {
+  letter-spacing: normal !important;
+}
+
+html.lang-fa .language-switch {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Dropdowns: text on the right, arrow on the left. */
+html.lang-fa .glass-menu {
+  direction: rtl;
+}
+
+html.lang-fa button.glass-field[aria-haspopup="listbox"] {
+  padding-left: 2.25rem;
+  padding-right: 0.75rem;
+  text-align: right;
+}
+
+html.lang-fa button.glass-field[aria-haspopup="listbox"] > svg {
+  right: auto;
+  left: 0.75rem;
+}
+
+html.lang-fa button.glass-field[aria-haspopup="listbox"] .label-font,
+html.lang-fa .glass-option .label-font {
+  text-align: right;
+  unicode-bidi: plaintext;
+}
+
+/* Sliders keep their normal direction: minimum on the left. */
+html.lang-fa .page-content input[type="range"] {
+  direction: ltr;
 }

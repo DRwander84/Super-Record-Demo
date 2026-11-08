@@ -82,6 +82,7 @@ import { motion } from 'framer-motion'
 import type { AreaRect, AreaSelection, DetectedGame, RecordingFileInfo, ShortcutAction, ShortcutMap } from './types/electron'
 import appIconData from './assets/appIconData'
 import GlassSelect from './components/GlassSelect'
+import { normalizeLanguage, setLanguage, type AppLanguage } from './i18n/language'
 
 
 
@@ -157,7 +158,7 @@ const gamingFpsOptions: SelectOption[] = [
 
 
 
-// Texts that use the Poppins label font.
+// Texts that use the heading font.
 const HEADING_FONT_TITLES = new Set([
   'Video Save Location',
   'Keyboard Shortcuts',
@@ -322,7 +323,7 @@ function Section({
             aria-label={open ? `Collapse ${title}` : `Expand ${title}`}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
-            className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
+            className="ms-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
           >
             <motion.span
               animate={{ rotate: open ? 180 : 0 }}
@@ -453,7 +454,7 @@ function Toggle({
 
       aria-pressed={checked}
 
-      className={`relative ml-auto block h-6 w-11 shrink-0 rounded-full transition-colors ${
+      className={`relative ms-auto block h-6 w-11 shrink-0 rounded-full transition-colors ${
 
         checked ? 'bg-red-500' : 'bg-zinc-700'
 
@@ -635,7 +636,7 @@ function ShortcutField({
           setCapturing(true)
         }}
         onBlur={() => setCapturing(false)}
-        className={`glass-field w-full rounded-xl px-3 py-3 text-left text-xs font-semibold ${
+        className={`glass-field w-full rounded-xl px-3 py-3 text-start text-xs font-semibold ${
           capturing ? 'is-capturing' : ''
         }`}
       >
@@ -777,7 +778,7 @@ function FocusKeyField({
           setCapturing(true)
         }}
         onBlur={() => setCapturing(false)}
-        className={`glass-field w-full rounded-xl px-3 py-3 text-left text-xs font-semibold ${
+        className={`glass-field w-full rounded-xl px-3 py-3 text-start text-xs font-semibold ${
           capturing ? 'is-capturing' : ''
         }`}
       >
@@ -799,6 +800,7 @@ function SettingsPage() {
     saveSettingsNow,
   } = useSettings()
 
+  const language = normalizeLanguage(settings.language)
   const [selecting, setSelecting] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -843,6 +845,14 @@ function SettingsPage() {
     } finally {
       setSelecting(false)
     }
+  }
+
+  // The language applies and is stored immediately, no need to press Save.
+  const handleLanguage = (next: AppLanguage) => {
+    if (next === language) return
+    setLanguage(next)
+    updateSettings({ language: next })
+    void saveSettingsNow().catch(() => undefined)
   }
 
   const handleSave = async () => {
@@ -901,6 +911,24 @@ function SettingsPage() {
 
   return (
     <>
+      <div className="mb-4 px-1">
+        <SettingRow label="Language">
+          <div dir="ltr" className="language-switch" role="group" aria-label="Language">
+            {(['en', 'fa'] as AppLanguage[]).map((code) => (
+              <button
+                key={code}
+                type="button"
+                aria-pressed={language === code}
+                onClick={() => handleLanguage(code)}
+                className={`language-option ${language === code ? 'is-active' : ''}`}
+              >
+                {code.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        </SettingRow>
+      </div>
+
       <Section
         title="Video Save Location"
         description="Choose a location to save recorded videos"
@@ -1750,7 +1778,7 @@ const finishResetAnimation = () => setResetAnimation(false)
 
             </div>
 
-            <div className="h-2 overflow-hidden rounded-full bg-white/[0.07]">
+            <div dir="ltr" className="h-2 overflow-hidden rounded-full bg-white/[0.07]">
 
               <div ref={micLevelBar} className="h-full w-0 rounded-full bg-green-400" />
 
@@ -2682,7 +2710,7 @@ const finishResetAnimation = () => setResetAnimation(false)
             <span className="text-zinc-400">Microphone Level</span>
             <span className="text-zinc-600">{!hasMicrophone ? 'No microphone detected' : microphone ? 'Live' : 'Enable microphone to see level'}</span>
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-white/[0.07]">
+          <div dir="ltr" className="h-2 overflow-hidden rounded-full bg-white/[0.07]">
             <div ref={micLevelBar} className="h-full w-0 rounded-full bg-green-400" />
           </div>
         </div>
@@ -3307,7 +3335,7 @@ useEffect(() => {
 
         <div className="flex min-h-[180px] items-center justify-center text-xs text-zinc-500">
 
-          <RefreshCw size={16} className="mr-2 animate-spin" /> Loading recordings...
+          <RefreshCw size={16} className="me-2 animate-spin" /> Loading recordings...
 
         </div>
 
@@ -3438,6 +3466,11 @@ useEffect(() => {
 
 
 function App() {
+  const { settings: appSettings, isLoading: settingsLoading } = useSettings()
+  // The saved language is applied once the settings file has been read.
+  useEffect(() => {
+    if (!settingsLoading) setLanguage(normalizeLanguage(appSettings.language))
+  }, [settingsLoading, appSettings.language])
 
   const [activePage, setActivePage] = useState<Page>('Screen Capture')
 
@@ -3721,7 +3754,7 @@ function App() {
 
         <div className="main-scroll min-h-0 flex-1 overflow-y-auto">
 
-          <div className="mx-auto w-full max-w-[1200px] p-5 sm:p-6">
+          <div className="page-content mx-auto w-full max-w-[1200px] p-5 sm:p-6">
 
             <header className="mb-7 flex items-center justify-between gap-3">
 

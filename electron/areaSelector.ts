@@ -205,7 +205,7 @@ const OVERLAY_HTML = `<!doctype html>
  * rectangle with the mouse. Resolves with the rectangle in DIPs relative
  * to the display's top-left corner, or null when cancelled.
  */
-export function selectCaptureArea(display: Display): Promise<AreaRect | null> {
+export function selectCaptureArea(display: Display, language: 'en' | 'fa' = 'en'): Promise<AreaRect | null> {
   if (activeSelection) return activeSelection
 
   const selection = new Promise<AreaRect | null>((resolve) => {
@@ -298,6 +298,23 @@ export function selectCaptureArea(display: Display): Promise<AreaRect | null> {
         if (!settled && !overlay.isDestroyed() && !overlay.isFocused()) finish(null)
       }, 250)
     })
+
+    // Persian texts for the overlay. Only the visible words change.
+    if (language === 'fa') {
+      overlay.webContents.once('did-finish-load', () => {
+        void overlay.webContents
+          .executeJavaScript(
+            `(() => {
+              document.getElementById('cancel').textContent = '\u0644\u063a\u0648';
+              document.getElementById('confirm').textContent = '\u0634\u0631\u0648\u0639 \u0636\u0628\u0637 \u0646\u0627\u062d\u06cc\u0647';
+              const hint = document.getElementById('hint');
+              hint.dir = 'rtl';
+              hint.innerHTML = '\u0628\u0631\u0627\u06cc \u0627\u0646\u062a\u062e\u0627\u0628 \u0646\u0627\u062d\u06cc\u0647 \u0628\u06a9\u0634\u06cc\u062f &middot; <b>Enter</b> \u062a\u0623\u06cc\u06cc\u062f &middot; <b>Esc</b> \u0644\u063a\u0648';
+            })()`,
+          )
+          .catch(() => undefined)
+      })
+    }
 
     void overlay.loadURL(
       `data:text/html;charset=utf-8,${encodeURIComponent(OVERLAY_HTML)}`,
