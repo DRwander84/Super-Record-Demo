@@ -26,34 +26,6 @@ What makes SUPER RECORD stand out is its collection of optional features, giving
 
 - **Hardware Monitoring:** Display live hardware usage information directly in your gameplay recordings. GPU and CPU models are detected automatically, making this feature especially useful for gaming benchmarks, hardware testing, and performance comparison videos.
 
-### Screen Record
-
-- Native FFmpeg capture: Desktop Duplication (`ddagrab`) with an automatic GDI fallback.
-- Hardware encoders (NVENC, AMF, QSV) are used first when available; software encoders are the fallback.
-- Codecs: H.264, H.265 / HEVC and AV1.
-- Containers: MP4, MKV, MOV (all codecs) and WebM (AV1 only).
-- Capture modes: Full Screen, Custom Resolution (aspect ratio preserved) and Select Area, with monitor selection.
-- Configurable frame rate, video bitrate and cursor visibility.
-- Microphone and system (loopback) audio, with selectable audio codec and bitrate.
-- Optional webcam overlay with shape, size, position, mirror and opacity settings.
-- Optional Mouse Click Effects and Mouse Focus (hold-key zoom).
-- Pause, resume and stop. Pausing creates a new video segment; all segments are joined when the recording stops.
-
-### Gaming Mode
-
-- Detects running games and records the selected program.
-- Per-program audio capture, so only the game's sound is recorded.
-- Constant or variable frame rate, Low Latency Capture and HDR10 recording (HEVC).
-- Optional Speedrun Timer and hardware Monitoring panel drawn into the video.
-
-### General
-
-- Frameless window with an isolated preload bridge.
-- Customizable global keyboard shortcuts that also work while another application has focus.
-- Persistent settings, window position and selectable output folder.
-- Each finished recording gets a small `<file>.json` sidecar with its resolution, FPS, codec and bitrate.
-- My Recordings library for listing, searching, opening, revealing and deleting videos in the output folder.
-
 ## Requirements
 
 - Windows 10 or Windows 11 (64-bit).
