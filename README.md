@@ -26,6 +26,8 @@ What makes SUPER RECORD stand out is its collection of optional features, giving
 
 - **Hardware Monitoring:** Display live hardware usage information directly in your gameplay recordings. GPU and CPU models are detected automatically, making this feature especially useful for gaming benchmarks, hardware testing, and performance comparison videos.
 
+- **Language:** This app supports both English and Persian languages.
+
 ## Requirements
 
 - Windows 10 or Windows 11 (64-bit).
