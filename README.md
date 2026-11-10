@@ -79,6 +79,10 @@ GPU values for NVIDIA cards, RAM, CPU usage and the CPU / GPU names work out of 
 - [FFmpeg](https://ffmpeg.org/) is used for capture and encoding, installed through the `ffmpeg-static` package. FFmpeg and its encoders have their own licenses; check them before redistributing builds.
 - The Poppins font is distributed under the SIL Open Font License.
 
+## Recommended Channel
+
+By visiting the [PC Gaming Hub](https://t.me/pcgaminghub) Telegram channel, you can follow the latest gaming and technology news.
+
 ## License
 
 SUPER RECORD is licensed under the Apache License, Version 2.0.
