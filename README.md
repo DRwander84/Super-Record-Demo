@@ -83,6 +83,12 @@ GPU values for NVIDIA cards, RAM, CPU usage and the CPU / GPU names work out of 
 
 By visiting the [PC Gaming Hub](https://t.me/pcgaminghub) Telegram channel, you can follow the latest gaming and technology news.
 
+## Donation
+
+If you would like to support me, you can send a donation to the following address:
+
+`TMKpNvJ73RR6g2NQ3b18eAHZuXCkbiTUv7`
+
 ## License
 
 SUPER RECORD is licensed under the Apache License, Version 2.0.
